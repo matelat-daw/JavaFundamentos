@@ -9,7 +9,6 @@ public class EvaluacionE1 {
     private static double totalPagar;
     private static boolean continuar = true; // Condición para controlar el ciclo de compras, se pueden realizar varias compras hasta que el usuario decida finalizar.
     static void main(String[] args) {
-        // Scanner entrada = new Scanner(System.in);
         System.out.println("Hola Mundo");
         System.out.println("Bienvenidas a la Tienda de Femete");
 
@@ -33,12 +32,13 @@ public class EvaluacionE1 {
                 descuento = 0; // Como la App permite hacer más de una compra, es necesario reiniciar el valor del descuento para cada compra nueva.
             }
 
-            System.out.println("Artículo: " + nombreArticulo);
-            System.out.println("Unidades: " + cantidadArticulo);
-            System.out.println("Precio unitario: " + precioArticulo);
-            System.out.println("Total sin descuento: " + totalParcial);
-            System.out.println("Descuento aplicado: " + descuento);
-            System.out.println("Total a pagar: " + totalPagar);
+            // System.out.println("Artículo: " + nombreArticulo);
+            System.out.printf("Artículo: %s%n", nombreArticulo);
+            System.out.printf("Unidades: %d%n", cantidadArticulo);
+            System.out.printf("Precio unitario: %.2f%n", precioArticulo);
+            System.out.printf("Total sin descuento: %.2f%n", totalParcial);
+            System.out.printf("Descuento aplicado: %.2f%n", descuento);
+            System.out.printf("Total a pagar: %.2f%n", totalPagar);
 
             System.out.println("¿Deseas realizar otra compra? (s/n)");
             String respuesta = entrada.nextLine().trim();
