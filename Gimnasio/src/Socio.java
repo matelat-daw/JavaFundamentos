@@ -1,7 +1,7 @@
 package Gimnasio.src;
 
 public class Socio {
-    private String nombre;
+    String nombre;
     int edad;
     String tipoPlan;
     boolean descuento;
@@ -12,11 +12,6 @@ public class Socio {
         this.edad = edad;
         this.tipoPlan = tipoPlan;
         this.descuento = descuento;
-    }
-
-    public String getName()
-    {
-        return nombre;
     }
 
     public int validarEdad()
@@ -31,11 +26,11 @@ public class Socio {
         }
     }
 
-    public void socioInfo()
+    public void mostrarInfo()
     {
-
+        System.out.printf("Nombre: %s%n - Edad: %d%n - tipoPlan: %s%n - descuento: %b%n", nombre, edad, plan(), descuento);
     }
-
+    
     public String plan()
     {
         return tipoPlan;
