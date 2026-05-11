@@ -7,7 +7,7 @@ public class Parking {
     private double parcial;
     private boolean abonado;
     private final double descuento = .2;
-    private int horas;
+    public int horas;
 
     public Parking(String matricula, int horas, boolean abonado)
     {
@@ -30,12 +30,12 @@ public class Parking {
         return total;
     }
 
-    public void validarHoras()
+    public int validarHoras()
     {
         if (horas <= 0) {
-            System.out.println("El Tiempo no Puede Ser 0.");
+            return 1;
         }
-        System.out.printf("Aparcó durante: %d%n", horas);
+        return horas;
     }
 
     public void mostrarResumen()
