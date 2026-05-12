@@ -10,7 +10,7 @@ public class ProgramaGimnasio {
         energyFit.agregarSocio(socio); // Agrega el Socio creado al ArrayList de Socios del Gimnasio.
         socio.mostrarInfo(); // Muestra la información del Socio creado, utilizando el método mostrarInfo() de la Clase Socio.
         String plan = socio.obtenerPlan(); // Obtiene el tipo de plan del Socio utilizando el método plan() de la Clase Socio.
-        System.out.printf("Plan de %s: %s%n%n", socio.nombre, socio.obtenerPlan()); // Muestra el tipo de plan del Socio.
+        System.out.printf("Plan de %s: %s%n%n", socio.nombre, plan); // Muestra el tipo de plan del Socio.
         energyFit.crearPlan("VIP", 15.0); // Crea un Nuevo Plan en la Clase Gimnasio.
         energyFit.mostrarInfo(); // Muestra la información de todos los Socios del Gimnasio, utilizando el método mostrarInfo() de la Clase Gimnasio.
         total = energyFit.calcularTotal(); // Obtiene el Total Recaudado por el Gimnasio Utilizando el Método calcularTotal() de la Clase Gimnasio.
