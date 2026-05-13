@@ -1,0 +1,7 @@
+Comandos Maven:
+
+mvn eclipse:eclipse // Genere Archivos .project y .classpath
+
+mvn clean // Limpia el Proyecto, Elimina la Carpeta target
+
+mvn package // Crea el la Carpeta target y el Paquete war. Para funcionar tiene que estar la etiqueta: <packaging>war</packaging> en el pom.xml
