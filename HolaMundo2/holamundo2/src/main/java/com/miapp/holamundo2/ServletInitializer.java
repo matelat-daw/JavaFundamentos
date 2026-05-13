@@ -11,6 +11,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
 		return application.sources(Holamundo2Application.class);
 	}
 	public static void main(String[] args) {
-        SpringApplication.run(SpringApplicationBuilder.class, args);
+        SpringApplication.run(Holamundo2Application.class, args);
     }
 }
