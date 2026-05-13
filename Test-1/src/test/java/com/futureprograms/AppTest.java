@@ -16,7 +16,7 @@ public class AppTest {
         App app = new App();
         assertNotNull("App debe ser instanciable", app);
         assertTrue("App debe extender HttpServlet", 
-            app instanceof javax.servlet.http.HttpServlet);
+            app instanceof jakarta.servlet.http.HttpServlet);
     }
 
     /**
