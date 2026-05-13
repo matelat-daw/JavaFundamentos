@@ -6,6 +6,7 @@ public class ProgramaGimnasio {
     public void main(String[] args)
     {
         Gimnasio energyFit = new Gimnasio("EnergyFit"); // Crea el Gimnasio Nombre "EnergyFit", en la Clase Gimnasio
+        System.out.printf("Te Damos la Bienvenida al Gimnasio: %s%n%n", energyFit.getNombre()); // Muestra el Nombre del Gimnasio creado, utilizando el atributo nombre de la Clase Gimnasio.
         Socio socio = new Socio("César", 58, "PREMIUM", true); // Crea un Socio en la Clase Socio.
         energyFit.agregarSocio(socio); // Agrega el Socio creado al ArrayList de Socios del Gimnasio.
         socio.mostrarInfo(); // Muestra la información del Socio creado, utilizando el método mostrarInfo() de la Clase Socio.

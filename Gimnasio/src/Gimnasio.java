@@ -20,6 +20,11 @@ public class Gimnasio {
         crearPlanes(); // Crea los Planes del Gimnasio, utilizando el método crearPlanes() de la Clase Gimnasio. 
     }
 
+    public String getNombre() // Método para Obtener el Nombre del Gimnasio, Llamado desde ProgramaGimnasio.
+    {
+        return nombre;
+    }
+
     public void crearSocio() // Método para Crear los Socios del Gimnasio, utilizando ArrayList.
     {
         socios.add(new Socio("Ana", 25, "PREMIUM", true));
