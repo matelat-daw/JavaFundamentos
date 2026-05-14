@@ -12,17 +12,11 @@ public class ContactoServlet extends HttpServlet {
   
     @Override
     protected void doGet(HttpServletRequest request,
-        HttpServletResponse response)
+                        HttpServletResponse response)
         throws ServletException, IOException {
         
-        // Crear el bean de contacto con los datos de la tienda
-        ContactoBean contacto = new ContactoBean(
-            "TechStore",
-            "Calle Principal 123, Tenerife, España",
-            "+34 92 234 5678",
-            "contacto@techstore.com",
-            "Lunes a Viernes: 9:00 - 18:00 | Sábado: 10:00 - 14:00"
-        );
+        // Obtener el bean de contacto con los datos de la tienda
+        ContactoBean contacto = crearContactoTienda();
         
         // Enviar el bean a la vista
         request.setAttribute("contacto", contacto);
@@ -63,19 +57,23 @@ public class ContactoServlet extends HttpServlet {
             return;
         }
         
-        // Crear el bean de contacto con los datos de la tienda
-        ContactoBean contacto = new ContactoBean(
-            "TechStore",
-            "Calle Principal 123, Madrid, España",
-            "+34 91 234 5678",
-            "contacto@techstore.com",
-            "Lunes a Viernes: 9:00 - 18:00 | Sábado: 10:00 - 14:00"
-        );
+        // Obtener el bean de contacto con los datos de la tienda
+        ContactoBean contacto = crearContactoTienda();
         
         // Enviar confirmación
         request.setAttribute("contacto", contacto);
         request.setAttribute("exito", "¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.");
         request.getRequestDispatcher("/WEB-INF/vistas/contacto.jsp") 
            .forward(request, response);
+    }
+    
+    private ContactoBean crearContactoTienda() {
+        return new ContactoBean(
+            "TechStore",
+            "Calle Principal 123, Tenerife, España",
+            "+34 92 234 5678",
+            "contacto@techstore.com",
+            "Lunes a Viernes: 9:00 - 18:00 | Sábado: 10:00 - 14:00"
+        );
     }
 }

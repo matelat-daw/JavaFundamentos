@@ -5,7 +5,7 @@
 <head> 
     <meta charset="UTF-8"> 
     <title>Detalle del producto</title> 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detalle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head> 
 <body> 
     <c:choose> 

@@ -5,7 +5,7 @@
 <head> 
     <meta charset="UTF-8"> 
     <title>${titulo}</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/catalogo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head> 
 <body> 
     <h1><c:out value="${titulo}"/></h1> 

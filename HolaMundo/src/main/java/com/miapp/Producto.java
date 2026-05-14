@@ -1,5 +1,12 @@
 package com.miapp;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Producto {
 
     private int id;
@@ -7,33 +14,4 @@ public class Producto {
     private double precio;
     private String categoria;
     private String descripcion;
-
-    public Producto(int id, String nombre, double precio,
-            String categoria, String descripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.categoria = categoria;
-        this.descripcion = descripcion;
-    }
-
-    public int getId() { 
-        return id; 
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
 }
