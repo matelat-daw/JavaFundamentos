@@ -29,8 +29,8 @@
             </div>
         </div>
         
-        <c:url value="/tienda/catalogo" var="urlCatalogo" />
-        <a class="boton" href="${urlCatalogo}">Ver Catálogo Completo</a>
+        <c:url value="/tienda" var="urlInicio" /> 
+        <a href="${urlInicio}">Volver al inicio</a>
     </div>
 </body>
 </html>

@@ -79,8 +79,8 @@
             </form>
         </div>
         
-        <c:url value="/tienda/catalogo" var="urlCatalogo" />
-        <a class="boton volver" href="${urlCatalogo}">Volver al Catálogo</a>
+        <c:url value="/tienda" var="urlInicio" /> 
+        <a href="${urlInicio}">Volver al inicio</a>
     </div>
 </body>
 </html>
