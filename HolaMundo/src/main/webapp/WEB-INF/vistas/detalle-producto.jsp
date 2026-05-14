@@ -5,18 +5,7 @@
 <head> 
     <meta charset="UTF-8"> 
     <title>Detalle del producto</title> 
-    <style> 
-        body { font-family: Arial, sans-serif; margin: 40px; } 
-        .producto { 
-            max-width: 700px; 
-            border: 1px solid #ddd; 
-            padding: 24px; 
-            border-radius: 12px; 
-            background-color: #f9fbff; 
-        } 
-        .precio { font-size: 1.4em; font-weight: bold; color: #2E5FA3; } 
-        a { color: #2E5FA3; font-weight: bold; } 
-    </style> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detalle.css">
 </head> 
 <body> 
     <c:choose> 

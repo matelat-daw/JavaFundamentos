@@ -5,29 +5,7 @@
 <head> 
     <meta charset="UTF-8"> 
     <title>${nombreTienda}</title> 
-    <style> 
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 40px; 
-            background-color: #f5f7fb; 
-        } 
-        .tarjeta { 
-            max-width: 700px; 
-            background-color: white; 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15); 
-        } 
-        a.boton {
-            display: inline-block; 
-            margin-top: 20px; 
-            padding: 10px 16px; 
-            background-color: #2E5FA3; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 8px; 
-        } 
-    </style> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tienda.css">
 </head> 
 <body> 
     <div class="tarjeta"> 
