@@ -23,6 +23,9 @@ public class HolaMundoServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         
+        // Obtener el nombre del parámetro
+        String nombre = request.getParameter("nombre");
+        
         // Incrementa el contador de forma segura
         int visitasActuales = contadorVisitas.incrementAndGet();
         
@@ -40,10 +43,29 @@ public class HolaMundoServlet extends HttpServlet {
         out.println("    <h1 class='text-danger'>¡Hola desde Java!</h1>");
         out.println("    <p>Este texto lo generó un Servlet en el servidor.</p>");
         out.println("    <hr>");
-        out.println("    <h2 class='text-primary'>Bienvenido, César</h2>");
-        out.println("    <p>Fecha y hora en el servidor: " + fechaHora + "</p>");
-        out.println("    <p>Visitas desde que arrancó Tomcat: " + visitasActuales + "</p>");
-        out.println("    <p>Método HTTP de esta petición: " + metodo + "</p>");
+        
+        // Si no hay nombre, mostrar formulario
+        if (nombre == null || nombre.trim().isEmpty()) {
+            out.println("    <div class='card p-4'>");
+            out.println("        <h2 class='text-primary mb-4'>Por favor, introduce tu nombre</h2>");
+            out.println("        <form method='GET' action='" + request.getRequestURI() + "'>");
+            out.println("            <div class='mb-3'>");
+            out.println("                <label for='nombre' class='form-label'>Nombre:</label>");
+            out.println("                <input type='text' class='form-control' id='nombre' name='nombre' required autofocus>");
+            out.println("            </div>");
+            out.println("            <button type='submit' class='btn btn-primary'>Enviar</button>");
+            out.println("        </form>");
+            out.println("    </div>");
+        } else {
+            // Si hay nombre, mostrar bienvenida
+            out.println("    <h2 class='text-success'>¡Bienvenido, " + nombre + "!</h2>");
+            out.println("    <p>Fecha y hora en el servidor: " + fechaHora + "</p>");
+            out.println("    <p>Visitas desde que arrancó Tomcat: " + visitasActuales + "</p>");
+            out.println("    <p>Método HTTP de esta petición: " + metodo + "</p>");
+            out.println("    <a href='" + request.getRequestURI() + "' class='btn btn-warning mt-3'>Cambiar nombre</a>");
+        }
+        
+        out.println("    <a href='" + request.getContextPath() + "/tienda' class='btn btn-success mt-3'>Ir a la Tienda</a>");
         out.println("</body>");
         out.println("</html>");
     }

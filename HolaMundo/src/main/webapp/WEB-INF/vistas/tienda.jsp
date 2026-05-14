@@ -16,11 +16,13 @@
   
         <c:url value="/tienda/catalogo" var="urlCatalogo" /> 
         <c:url value="/tienda/resumen" var="urlResumen" /> 
-        <c:url value="/tienda/contacto" var="urlContacto" /> 
+        <c:url value="/tienda/contacto" var="urlContacto" />
+        <c:url value="/hola" var="urlSaludo" />
         
-        <a class="boton" href="${urlCatalogo}">Ver catálogo</a> 
+        <a class="boton" href="${urlCatalogo}">Ver Catálogo</a> 
         <a class="boton1" href="${urlResumen}">Ver Resumen</a> 
-        <a class="boton2" href="${urlContacto}">Contacto</a> 
+        <a class="boton2" href="${urlContacto}">Contacto</a>
+        <a class="boton" href="${urlSaludo}">Saludo</a>
     </div> 
 </body> 
 </html> 
