@@ -11,6 +11,11 @@
         <h1 class="mb-2 text-primary"><c:out value="${titulo}"/></h1> 
         <p class="text-muted mb-4">Total disponible: <span class="badge bg-info">${totalProductos}</span> productos</p> 
   
+        <div class="mb-4">
+            <c:url value="/tienda/nuevo" var="urlNuevo" />
+            <a href="${urlNuevo}" class="btn btn-success">➕ Agregar Nuevo Producto</a>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-hover table-striped align-middle"> 
                 <thead class="table-success">
@@ -62,4 +67,34 @@
             <a href="${urlInicio}" class="btn btn-outline-primary">← Volver al inicio</a> 
         </nav>
     </div>
+
+    <!-- Modal de éxito al agregar producto -->
+    <c:if test="${tipo == 'exito'}">
+        <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-success">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="modalExitoLabel">✅ Producto Agregado Exitosamente</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success" role="alert">
+                            <strong>${mensaje}</strong>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <p class="card-text"><strong>Nombre:</strong> <span class="text-primary">${nombreProducto}</span></p>
+                                <p class="card-text"><strong>Precio:</strong> <span class="text-success">$${precioProducto}</span></p>
+                            </div>
+                        </div>
+                        <p class="text-muted text-center">El producto ha sido agregado al catálogo y aparecerá en la tabla de productos.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:if>
+
     <%@ include file="footer.jsp" %>

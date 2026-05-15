@@ -6,18 +6,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-  
-@WebServlet("/tienda")
-public class TiendaServlet extends HttpServlet {
-  
+
+/**
+ * Servlet para mostrar el formulario de creación de un nuevo producto
+ */
+@WebServlet("/tienda/nuevo")
+public class ProductoNuevoServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-  
-        request.setAttribute("nombreTienda", "Tienda Tech");
-        request.setAttribute("mensaje", "Aplicación JSP conectada con Servlets");
-  
-        request.getRequestDispatcher("/WEB-INF/vistas/tienda.jsp")
+
+        request.setAttribute("titulo", "Nuevo Producto");
+
+        request.getRequestDispatcher("/WEB-INF/vistas/nuevo-producto.jsp")
                .forward(request, response);
     }
 }

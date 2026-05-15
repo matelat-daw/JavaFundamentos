@@ -18,6 +18,7 @@ public class ListadoIncidenciasServlet extends HttpServlet {
         HttpSession session = request.getSession();
         // TODO 1: recupera de la sesión el atributo "incidencias".
         // Pista: tendrás que convertirlo a List<IncidenciaSeguridad>.
+        @SuppressWarnings("unchecked")
         List<IncidenciaSeguridad> incidencias = (List<IncidenciaSeguridad>) session.getAttribute("incidencias");
         // TODO 2: si la lista es null, crea un ArrayList vacío.
         if (incidencias == null) {

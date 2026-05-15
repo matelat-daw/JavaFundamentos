@@ -6,7 +6,7 @@ package com.miapp;
 public class ImagesUtil {
 
     // Ruta base de las imágenes en el servidor web
-    private static final String IMAGES_PATH = "/HolaMundo/recursos/imgs/";
+    private static final String IMAGES_PATH = "/recursos/imgs/";
 
     /**
      * Obtiene la URL completa de una imagen a partir de su nombre
@@ -45,7 +45,6 @@ public class ImagesUtil {
         if (nombreImagen == null || nombreImagen.isEmpty()) {
             return false;
         }
-        return nombreImagen.endsWith(".webp") || nombreImagen.endsWith(".jpg") 
-            || nombreImagen.endsWith(".jpeg") || nombreImagen.endsWith(".png");
+        return nombreImagen.endsWith(".webp");
     }
 }

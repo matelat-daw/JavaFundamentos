@@ -130,17 +130,31 @@ public class ProductoDAO {
         try (Connection conexion = DatabaseConnection.getConnection();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
+            System.out.println("=== INSERTANDO PRODUCTO EN BD ===");
+            System.out.println("SQL: " + sql);
+            System.out.println("Parámetros:");
+            System.out.println("  1. Nombre: " + producto.getNombre());
+            System.out.println("  2. Precio: " + producto.getPrecio());
+            System.out.println("  3. Categoría: " + producto.getCategoria());
+            System.out.println("  4. Descripción: " + producto.getDescripcion());
+            System.out.println("  5. Imagen: " + producto.getImagen());
+
             ps.setString(1, producto.getNombre());
             ps.setDouble(2, producto.getPrecio());
             ps.setString(3, producto.getCategoria());
             ps.setString(4, producto.getDescripcion());
             ps.setString(5, producto.getImagen());
 
-            ps.executeUpdate();
+            int filasAfectadas = ps.executeUpdate();
+            System.out.println("Filas afectadas: " + filasAfectadas);
             return true;
 
         } catch (SQLException e) {
-            System.err.println("Error al insertar producto: " + e.getMessage());
+            System.err.println("=== ERROR AL INSERTAR PRODUCTO ===");
+            System.err.println("SQL: " + sql);
+            System.err.println("Código de error: " + e.getErrorCode());
+            System.err.println("SQL State: " + e.getSQLState());
+            System.err.println("Mensaje: " + e.getMessage());
             e.printStackTrace();
         }
 

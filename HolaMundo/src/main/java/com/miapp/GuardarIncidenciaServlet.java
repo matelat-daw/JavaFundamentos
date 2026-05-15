@@ -60,6 +60,7 @@ public class GuardarIncidenciaServlet extends HttpServlet {
         IncidenciaSeguridad incidencia = new IncidenciaSeguridad(titulo, tipo, gravedad, descripcion);
         // TODO 5: recupera la lista de incidencias de la sesión.
         HttpSession session = request.getSession();
+        @SuppressWarnings("unchecked")
         List<IncidenciaSeguridad> incidencias = (List<IncidenciaSeguridad>) session.getAttribute("incidencias");
         // Si no existe, crea un ArrayList nuevo.
         if (incidencias == null) {

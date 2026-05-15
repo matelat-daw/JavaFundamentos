@@ -12,7 +12,7 @@ public class DatabaseConnection {
     // Configuración de la BD
     private static final String URL = "jdbc:mariadb://localhost:3306/techstore";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = "";
+    private static final String CONTRASENA = "Anubis@68";
     private static final String DRIVER = "org.mariadb.jdbc.Driver";
 
     /**
