@@ -34,15 +34,15 @@ public class ProductoActualizarServlet extends HttpServlet {
             boolean actualizado = ProductoDAO.actualizarProducto(producto);
 
             if (actualizado) {
-                request.setAttribute("mensaje", "Producto actualizado correctamente");
+                request.setAttribute("mensaje", "Producto Actualizado Correctamente");
                 request.setAttribute("tipo", "exito");
             } else {
-                request.setAttribute("mensaje", "Error al actualizar el producto");
+                request.setAttribute("mensaje", "Error al Actualizar el Producto");
                 request.setAttribute("tipo", "error");
             }
 
         } catch (NumberFormatException e) {
-            request.setAttribute("mensaje", "Error: Datos inválidos");
+            request.setAttribute("mensaje", "Error: Datos Inválidos");
             request.setAttribute("tipo", "error");
         }
 
