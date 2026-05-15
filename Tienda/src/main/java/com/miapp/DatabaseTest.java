@@ -57,7 +57,7 @@ public class DatabaseTest {
             System.out.println("\nVerifica que:");
             System.out.println("1. MariaDB esté ejecutándose en localhost:3306");
             System.out.println("2. La base de datos 'techstore' existe");
-            System.out.println("3. El usuario 'root' y contraseña 'Anubis@68' sean correctos");
+            System.out.println("3. El usuario 'root' y contraseña '' sean correctos");
             System.out.println("4. La tabla 'producto' exista");
             e.printStackTrace();
         }

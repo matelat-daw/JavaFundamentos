@@ -40,7 +40,8 @@ public class ResumenServlet extends HttpServlet {
         ResumenBean resumen = new ResumenBean(
             catalogo.size(),
             categorias.size(),
-            productoMasCaro
+            productoMasCaro,
+            precioMaximo
         );
         
         // Enviar el bean a la vista

@@ -34,6 +34,7 @@
                     <div class="card-body text-center py-5">
                         <h5 class="card-title">Producto Más Caro</h5>
                         <p class="card-text" style="font-size: 2rem; font-weight: bold;"><c:out value="${resumen.productoMasCaro}"/></p>
+                        <p class="card-text" style="font-size: 1.5rem;"><c:out value="Precio: "/>${resumen.precioProductoMasCaro} €</p>
                     </div>
                 </div>
             </div>

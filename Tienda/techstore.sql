@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `techstore`
 --
-CREATE DATABASE IF NOT EXISTS `techstore` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+CREATE DATABASE IF NOT EXISTS `techstore` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `techstore`;
 
 -- --------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `categoria`
@@ -58,7 +58,7 @@ CREATE TABLE `contacto` (
   `asunto` varchar(200) NOT NULL,
   `mensaje` text NOT NULL,
   `fecha_envio` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `producto` (
   `descripcion` varchar(500) DEFAULT NULL,
   `imagen` varchar(64) DEFAULT NULL,
   `fecha_creacion` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `producto`
