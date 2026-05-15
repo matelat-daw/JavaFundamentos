@@ -58,3 +58,4 @@ Descripción El recurso requerido no está disponible.
 
 Apache Tomcat/11.0.22
 
+En el código listado-incidencias.jsp en la línea 58 está la salida de la descripción con c:out, y al acceder a la lista de incidencias después de crearla muestra siempre como texto lo que se escribe en descripción, la siguiente línea está comentada y muestra el texto sin c:out y al introducir la nueva incidencia si en descripción escribo <script>alert("Cuidado te han Hackeado")</script>, se ejecuta el script en lugar de mostrar el texto en descripción.
