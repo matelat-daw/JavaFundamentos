@@ -147,7 +147,7 @@ public class ProductoDAO {
 
             int filasAfectadas = ps.executeUpdate();
             System.out.println("Filas afectadas: " + filasAfectadas);
-            return true;
+            return filasAfectadas > 0;
 
         } catch (SQLException e) {
             System.err.println("=== ERROR AL INSERTAR PRODUCTO ===");
@@ -189,6 +189,31 @@ public class ProductoDAO {
         }
 
         return false;
+    }
+
+    /**
+     * Obtiene todas las categorías disponibles en la BD
+     * 
+     * @return Lista de nombres de categorías
+     */
+    public static List<String> obtenerCategorias() {
+        List<String> categorias = new ArrayList<>();
+        String sql = "SELECT nombre FROM categoria ORDER BY nombre";
+
+        try (Connection conexion = DatabaseConnection.getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                categorias.add(rs.getString("nombre"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener categorías: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return categorias;
     }
 
     /**

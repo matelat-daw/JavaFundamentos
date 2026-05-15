@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet para mostrar el formulario de edición de un producto
@@ -17,6 +18,10 @@ public class ProductoEditarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Cargar categorías desde la BD
+        List<String> categorias = ProductoDAO.obtenerCategorias();
+        request.setAttribute("categorias", categorias);
 
         String idTexto = request.getParameter("id");
         Producto producto = null;

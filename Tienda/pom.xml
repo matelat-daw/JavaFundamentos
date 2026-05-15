@@ -54,6 +54,12 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- Plugin para silenciar los warnings de Unsafe en Java 25 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

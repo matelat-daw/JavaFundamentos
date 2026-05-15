@@ -33,19 +33,21 @@ public class DatabaseTest {
             }
 
             // Listar algunos productos
-            sql = "SELECT id, nombre, precio, categoria FROM producto LIMIT 5";
+            sql = "SELECT id, nombre, precio, categoria, descripcion, imagen FROM producto LIMIT 5";
             rs = stmt.executeQuery(sql);
 
             System.out.println("\nPrimeros 5 productos:");
-            System.out.println("ID | Nombre | Precio | Categoría");
-            System.out.println("---+--------+--------+----------");
+            System.out.println("ID | Nombre | Precio | Categoría | Descripción | Imagen");
+            System.out.println("---+--------+--------+-----------+-------------+-------");
 
             while (rs.next()) {
-                System.out.printf("%d | %s | $%.2f | %s%n",
+                System.out.printf("%d | %s | $%.2f | %s | %s | %s%n",
                     rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getDouble("precio"),
-                    rs.getString("categoria")
+                    rs.getString("categoria"),
+                    rs.getString("descripcion"),
+                    rs.getString("imagen")
                 );
             }
 

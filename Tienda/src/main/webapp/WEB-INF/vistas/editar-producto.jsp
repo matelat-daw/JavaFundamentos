@@ -33,11 +33,9 @@
                                         <label for="categoria" class="form-label">Categoría:</label>
                                         <select id="categoria" name="categoria" class="form-select" required>
                                             <option value="">-- Seleccionar Categoría --</option>
-                                            <option value="Periféricos" <c:if test="${producto.categoria == 'Periféricos'}">selected</c:if>>Periféricos</option>
-                                            <option value="Pantallas" <c:if test="${producto.categoria == 'Pantallas'}">selected</c:if>>Pantallas</option>
-                                            <option value="Audio" <c:if test="${producto.categoria == 'Audio'}">selected</c:if>>Audio</option>
-                                            <option value="Componentes" <c:if test="${producto.categoria == 'Componentes'}">selected</c:if>>Componentes</option>
-                                            <option value="Accesorios" <c:if test="${producto.categoria == 'Accesorios'}">selected</c:if>>Accesorios</option>
+                                            <c:forEach var="cat" items="${categorias}">
+                                                <option value="${cat}" <c:if test="${producto.categoria == cat}">selected</c:if>>${cat}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     

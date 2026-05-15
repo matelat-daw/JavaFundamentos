@@ -12,6 +12,5 @@
     });
 </script>
 </html>
-    });
 </script>
 </html>

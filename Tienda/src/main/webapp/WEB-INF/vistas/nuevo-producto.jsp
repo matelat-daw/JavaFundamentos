@@ -30,11 +30,9 @@
                                 <label for="categoria" class="form-label">Categoría:</label>
                                 <select id="categoria" name="categoria" class="form-select" required>
                                     <option value="">-- Seleccionar Categoría --</option>
-                                    <option value="Periféricos">Periféricos</option>
-                                    <option value="Pantallas">Pantallas</option>
-                                    <option value="Audio">Audio</option>
-                                    <option value="Componentes">Componentes</option>
-                                    <option value="Accesorios">Accesorios</option>
+                                    <c:forEach var="cat" items="${categorias}">
+                                        <option value="${cat}">${cat}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             

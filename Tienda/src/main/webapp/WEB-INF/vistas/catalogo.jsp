@@ -70,7 +70,7 @@
 
     <!-- Modal de éxito al agregar producto -->
     <c:if test="${tipo == 'exito'}">
-        <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal fade" id="modalExito" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-success">
                     <div class="modal-header bg-success text-white">
@@ -95,6 +95,71 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var modalEl = document.getElementById('modalExito');
+                if (modalEl) {
+                    var myModal = new bootstrap.Modal(modalEl, {
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    
+                    // Limpiar el sombreado si el modal se cierra por cualquier motivo
+                    modalEl.addEventListener('hidden.bs.modal', function () {
+                        document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    });
+
+                    myModal.show();
+                }
+            });
+        </script>
+    </c:if>
+
+    <!-- Alerta de error si algo falló -->
+    <c:if test="${tipo == 'error'}">
+        <div class="modal fade" id="modalError" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-danger">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="modalErrorLabel">❌ Error al Procesar</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            <p class="mb-0"><strong>${mensaje}</strong></p>
+                        </div>
+                        <p class="text-muted text-center mt-3">Hubo un problema al intentar guardar el producto. Por favor, revisa los datos e inténtalo de nuevo.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var modalEl = document.getElementById('modalError');
+                if (modalEl) {
+                    var myModal = new bootstrap.Modal(modalEl, {
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    // Limpiar el sombreado si el modal se cierra por cualquier motivo
+                    modalEl.addEventListener('hidden.bs.modal', function () {
+                        document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    });
+
+                    myModal.show();
+                }
+            });
+        </script>
     </c:if>
 
     <%@ include file="footer.jsp" %>
