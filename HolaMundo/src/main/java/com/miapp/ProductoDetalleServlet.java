@@ -15,17 +15,29 @@ public class ProductoDetalleServlet extends HttpServlet {
                          HttpServletResponse response) 
             throws ServletException, IOException { 
   
-        String idTexto = request.getParameter("id"); 
+        // String idTexto = request.getParameter("id"); 
         Producto producto = null; 
   
-        if (idTexto != null) { 
-            try { 
-                int id = Integer.parseInt(idTexto); 
-                producto = DatosTienda.buscarPorId(id); 
-            } catch (NumberFormatException error) { 
-                producto = null; 
-            } 
-        } 
+        // if (idTexto != null) { 
+        //     try { 
+        //         int id = Integer.parseInt(idTexto); 
+        //         producto = DatosTienda.buscarPorId(id); 
+        //     } catch (NumberFormatException error) { 
+        //         producto = null; 
+        //     } 
+        // } 
+
+        String idTexto = request.getParameter("id");
+        int id;
+        try {
+        id = Integer.parseInt(idTexto);
+        producto = DatosTienda.buscarPorId(id);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Identificador no válido");
+            request.getRequestDispatcher("/WEB-INF/vistas/error.jsp")
+            .forward(request, response);
+            return;
+        }
   
         request.setAttribute("producto", producto); 
   

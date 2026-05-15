@@ -12,4 +12,5 @@ public class ResumenBean implements Serializable {
     private int totalProductos;
     private int totalCategorias;
     private String productoMasCaro;
+    private double precioProductoMasCaro;
 }

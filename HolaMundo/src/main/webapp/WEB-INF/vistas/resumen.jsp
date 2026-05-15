@@ -26,6 +26,7 @@
             <div class="resumen-item caro">
                 <h3>Producto Más Caro</h3>
                 <p class="texto"><c:out value="${resumen.productoMasCaro}"/></p>
+                <p class="texto"><c:out value="Precio: "/>${resumen.precioProductoMasCaro} €</p>
             </div>
         </div>
         

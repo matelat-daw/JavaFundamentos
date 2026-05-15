@@ -9,20 +9,20 @@
 </head> 
 <body> 
     <c:choose> 
-        <c:when test="${not empty producto}"> 
-            <div class="producto"> 
-                <h1><c:out value="${producto.nombre}"/></h1> 
-                <p><strong>Categoría:</strong> 
-                   <c:out value="${producto.categoria}"/></p> 
-                <p class="precio">${producto.precio} €</p> 
-                <p><c:out value="${producto.descripcion}"/></p> 
-            </div> 
-        </c:when> 
+        <c:when test="${not empty producto}">
+            <div class="producto">
+                <h1><c:out value="${producto.nombre}"/></h1>
+                <p><strong>Categoría:</strong>
+                   <c:out value="${producto.categoria}"/></p>
+                <p class="precio">${producto.precio} €</p>
+                <p><c:out value="${producto.descripcion}"/></p>
+            </div>
+        </c:when>
   
-        <c:otherwise> 
-            <h1>Producto no encontrado</h1> 
-            <p>No existe ningún producto con ese identificador.</p> 
-        </c:otherwise> 
+        <c:otherwise>
+            <h1>Producto no encontrado</h1>
+            <p>No existe ningún producto con ese identificador.</p>
+        </c:otherwise>
     </c:choose> 
   
     <p> 
