@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // Crea un constructor con argumentos para todos los atributos
 
 public class IncidenciaSeguridad {
- // TODO 1: crea cuatro atributos privados de tipo String:
- // titulo, tipo, gravedad y descripcion
- private String titulo;
- private String tipo;
- private String gravedad;
- private String descripcion;
+    // TODO 1: crea cuatro atributos privados de tipo String:
+    // titulo, tipo, gravedad y descripcion
+    private String titulo;
+    private String tipo;
+    private String gravedad;
+    private String descripcion;
 }
