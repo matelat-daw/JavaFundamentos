@@ -1,160 +1,174 @@
-/* ============================================
-   ESTILOS PERSONALIZADOS - Bootstrap 5.3.8
-   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Ajustes generales */
 body {
-    background-color: #f8f9fa;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+    color: #2d3748;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+p {
+    color: #718096;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+h:form {
+    width: 100%;
+}
+
+.form-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+}
+
+.campo {
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
     font-weight: 600;
-    color: #2c3e50;
+    margin-bottom: 8px;
+    color: #2d3748;
+    font-size: 1em;
 }
 
-/* Tarjetas mejoradas */
-.card {
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: #f7fafc;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f7fafc;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
     transition: all 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+.checkbox-wrapper:hover {
+    border-color: #667eea;
+    background-color: #edf2f7;
 }
 
-/* Tablas mejoradas */
-.table-hover tbody tr:hover {
-    background-color: #e7f3ff !important;
+.error {
+    color: #e53e3e;
+    font-size: 0.9em;
+    margin-top: 6px;
+    display: block;
 }
 
-.table-success thead {
-    background-color: #198754 !important;
+.error-messages {
+    background-color: #fed7d7;
+    border-left: 4px solid #e53e3e;
+    color: #742a2a;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95em;
 }
 
-/* Botones con efectos */
-.btn {
+button,
+input[type="submit"],
+.btn-guardar {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.btn:hover {
+button:hover,
+input[type="submit"]:hover,
+.btn-guardar:hover {
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
 }
 
-.btn:active {
+button:active,
+input[type="submit"]:active,
+.btn-guardar:active {
     transform: translateY(0);
 }
 
-/* Badges mejorados */
-.badge {
-    font-size: 0.875rem;
-    padding: 0.4rem 0.8rem;
-    font-weight: 500;
+button:disabled,
+input[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
-/* Alertas personalizadas */
-.alert {
-    border: none;
-    border-left: 4px solid;
+select {
+    cursor: pointer;
+    padding-right: 10px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+    appearance: none;
 }
 
-.alert-success {
-    border-left-color: #198754;
-    background-color: #d1e7dd;
-}
-
-.alert-danger {
-    border-left-color: #dc3545;
-    background-color: #f8d7da;
-}
-
-.alert-warning {
-    border-left-color: #ffc107;
-    background-color: #fff3cd;
-}
-
-.alert-info {
-    border-left-color: #0dcaf0;
-    background-color: #cfe2ff;
-}
-
-/* Imágenes responsivas */
-.img-thumbnail {
-    padding: 0.25rem;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    transition: transform 0.3s ease;
-}
-
-.img-thumbnail:hover {
-    transform: scale(1.05);
-}
-
-/* Formularios mejorados */
-.form-control, .form-select {
-    border: 1px solid #dee2e6;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
-
-/* Contenedor principal */
-.container {
-    max-width: 1200px;
-}
-
-/* Espaciado personalizado */
-.py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-}
-
-/* Efectos de hover en enlaces */
 a {
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 a:hover {
-    text-decoration: none;
+    opacity: 0.8;
 }
-
-/* Media queries responsivas */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.75rem;
-    }
-    
-    .table-responsive {
-        font-size: 0.9rem;
-    }
-    
-    .btn-sm {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.75rem;
-    }
-    
-    .d-grid {
-        gap: 1rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .container {
-        padding: 0 15px;
-    }
-    
-    h1 {
-        font-size: 1.5rem;
-    }
-    
-    .row {
-        gap: 1rem;
-    }
-}
-
