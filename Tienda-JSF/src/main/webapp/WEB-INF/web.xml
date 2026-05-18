@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="https://jakarta.ee https://jakarta.ee/web-app_6_1.xsd" 
+         version="6.1">
+
+    <!-- Modo de Desarrollo: Muestra errores detallados de JSF en pantalla -->
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+
+    <!-- Inicializador de Weld CDI para Tomcat -->
+    <listener>
+        <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    </listener>
+
+    <!-- Declaración del Servlet central de JSF (Mapeo automático en JSF 4.1) -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Mapeo del Servlet de JSF a las extensiones .xhtml -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <!-- Configuración de la página de inicio por defecto -->
+    <welcome-file-list>
+        <welcome-file>registro-producto.xhtml</welcome-file>
+    </welcome-file-list>
+    
+</web-app>
