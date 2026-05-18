@@ -9,28 +9,20 @@ import java.util.List;
 @Named("tiendaBean")
 @SessionScoped
 public class TiendaBean implements Serializable {
-
-    private String nombre;
-    private double precio;
-    private String categoria;
-    private boolean disponible;
-
+    
+    private Producto productoForm = new Producto();  // Objeto para el formulario
     private List<Producto> productos = new ArrayList<>();
 
     public String guardarProducto() {
-
-        // TODO 5: crea un objeto Producto usando los datos del formulario
-        // Pista:
-        // Producto nuevo = new Producto(nombre, precio, categoria, disponible);
-        Producto nuevo = new Producto(nombre, precio, categoria, disponible);
-
-        // TODO 6: añade el producto a la lista
-        // Pista:
-        // productos.add(nuevo);
+        // Crear una copia del producto del formulario
+        Producto nuevo = new Producto(
+            productoForm.getNombre(),
+            productoForm.getPrecio(),
+            productoForm.getCategoria(),
+            productoForm.isDisponible()
+        );
         productos.add(nuevo);
-
-        limpiarFormulario();
-
+        productoForm = new Producto();  // Limpiar formulario
         return "listado-productos?faces-redirect=true";
     }
 
@@ -38,44 +30,13 @@ public class TiendaBean implements Serializable {
         return "alta-producto?faces-redirect=true";
     }
 
-    private void limpiarFormulario() {
-        nombre = "";
-        precio = 0;
-        categoria = "";
-        disponible = false;
-    }
-    // TODO 7: crea getters y setters de todos los atributos
-    // Debe haber get/set para: nombre, precio, categoria, disponible y productos
-    public String getNombre() {
-        return nombre;
+    // Getters y setters simples
+    public Producto getProductoForm() {
+        return productoForm;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public boolean isDisponible() {
-        return disponible;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
+    public void setProductoForm(Producto productoForm) {
+        this.productoForm = productoForm;
     }
 
     public List<Producto> getProductos() {

@@ -21,7 +21,7 @@ xmlns:f="jakarta.faces.core">
         <div class="campo">
             <h:outputLabel for="nombre" value="Nombre del producto:" />
             <h:inputText id="nombre"
-            value="#{tiendaBean.nombre}"
+            value="#{tiendaBean.productoForm.nombre}"
             required="true"
             requiredMessage="El nombre es obligatorio." />
             <h:message for="nombre" styleClass="error" />
@@ -35,7 +35,7 @@ xmlns:f="jakarta.faces.core">
 Debe ser obligatorio.
 Añade f:validateDoubleRange con mínimo 0.01.
  -->
-            <h:inputText id="precio" value="#{tiendaBean.precio}" required="true"
+            <h:inputText id="precio" value="#{tiendaBean.productoForm.precio}" required="true"
                 requiredMessage="El precio es obligatorio"
                 styleClass="form-control">
                 <f:validateDoubleRange minimum="0.01" />
@@ -52,7 +52,7 @@ Añade f:validateDoubleRange con mínimo 0.01.
  Debe tener estas opciones:
 Periféricos, Pantallas, Audio, Componentes.
  -->
-<h:selectOneMenu id="categoria" value="#{tiendaBean.categoria}" required="true" requiredMessage="La categoría es obligatoria.">
+<h:selectOneMenu id="categoria" value="#{tiendaBean.productoForm.categoria}" required="true" requiredMessage="La categoría es obligatoria.">
     <f:selectItem itemValue="" itemLabel="-- Selecciona una categoría --" />
     <f:selectItem itemValue="Periféricos" itemLabel="Periféricos" />
     <f:selectItem itemValue="Pantallas" itemLabel="Pantallas" />
@@ -70,7 +70,7 @@ Periféricos, Pantallas, Audio, Componentes.
  Crea un h:selectBooleanCheckbox conectado con tiendaBean.disponible.
  -->
             <div class="checkbox-wrapper">
-                <h:selectBooleanCheckbox id="disponible" value="#{tiendaBean.disponible}" />
+                <h:selectBooleanCheckbox id="disponible" value="#{tiendaBean.productoForm.disponible}" />
                 <label for="disponible" style="margin-bottom: 0; margin-left: 5px;">Marcar si el producto está disponible</label>
             </div>
             <h:message for="disponible" styleClass="error" />
