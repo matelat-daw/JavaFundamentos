@@ -47,24 +47,26 @@ public class ProductoService {
         return productoRepository.findAllCategoriaNombres();
     }
 
-        public Producto guardarProductoConImagen(Producto producto, MultipartFile imagenFile) throws Exception {
+    public Producto guardarProductoConImagen(Producto producto, MultipartFile imagenFile) throws Exception {
         String imagenAnterior = null;
         
-        // CORRECCIÓN: Validar que el objeto ID exista y sea mayor que cero
-        if ((Integer)producto.getId() != null && producto.getId() > 0) {
+        // Obtener la imagen anterior si existe
+        if (producto.getId() != null && producto.getId() > 0) {
             Optional<Producto> productoExistente = productoRepository.findById(producto.getId());
             if (productoExistente.isPresent()) {
                 imagenAnterior = productoExistente.get().getImagen();
             }
         }
 
+        // Guardar nueva imagen si se proporciona
         if (imagenFile != null && !imagenFile.isEmpty()) {
-            if (imagenAnterior != null) {
+            if (imagenAnterior != null && !imagenAnterior.isEmpty()) {
                 ImagesUtil.eliminarImagen(imagenAnterior);
             }
             String nombreImagen = ImagesUtil.guardarImagen(imagenFile);
             producto.setImagen(nombreImagen);
-        } else if ((Integer)producto.getId() != null && producto.getId() > 0 && imagenAnterior != null) {
+        } else if (imagenAnterior != null && !imagenAnterior.isEmpty()) {
+            // Mantener imagen anterior si no se proporciona nueva
             producto.setImagen(imagenAnterior);
         }
 

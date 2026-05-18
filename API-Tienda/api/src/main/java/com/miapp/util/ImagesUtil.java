@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 public class ImagesUtil {
-    private static final String IMAGES_PATH = "/imgs/";
+    private static final String IMAGES_PATH = "/api/imgs/";
     private static final String[] ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "gif", "webp"};
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -17,13 +17,7 @@ public class ImagesUtil {
                 .filter(s -> !s.isBlank())
                 .orElseGet(() -> Optional.ofNullable(System.getenv("TIENDA_IMAGES_DIR"))
                         .filter(s -> !s.isBlank())
-                        .orElseGet(() -> {
-                            String catalinaBase = System.getProperty("catalina.base");
-                            if (catalinaBase != null && !catalinaBase.isBlank()) {
-                                return Paths.get(catalinaBase, "tienda-api", "imgs").toString();
-                            }
-                            return Paths.get(System.getProperty("user.home"), "tienda-api", "imgs").toString();
-                        }));
+                        .orElseGet(() -> Paths.get(System.getProperty("user.home"), "tienda-api", "imgs").toString()));
 
         return Paths.get(configured);
     }

@@ -46,18 +46,25 @@ public class ProductApiController {
 
     @PutMapping("/products/{id}")
     public ResponseEntity<Producto> update(@PathVariable int id, @RequestBody Producto producto) {
-        Optional<Producto> existing = productoService.obtenerProductoPorId(id);
-        if (!existing.isPresent()) return ResponseEntity.notFound().build();
-        Producto target = existing.get();
-        target.setNombre(producto.getNombre());
-        target.setPrecio(producto.getPrecio());
-        target.setCategoria(producto.getCategoria());
-        target.setDescripcion(producto.getDescripcion());
-        if (producto.getImagen() != null && !producto.getImagen().isBlank()) {
-            target.setImagen(producto.getImagen());
+        try {
+            Optional<Producto> existing = productoService.obtenerProductoPorId(id);
+            if (!existing.isPresent()) return ResponseEntity.notFound().build();
+            
+            Producto target = existing.get();
+            target.setId(id);  // Asegurar que el ID esté establecido
+            target.setNombre(producto.getNombre());
+            target.setPrecio(producto.getPrecio());
+            target.setCategoria(producto.getCategoria());
+            target.setDescripcion(producto.getDescripcion());
+            if (producto.getImagen() != null && !producto.getImagen().isBlank()) {
+                target.setImagen(producto.getImagen());
+            }
+            Producto saved = productoService.guardarProducto(target);
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        Producto saved = productoService.guardarProducto(target);
-        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/products/{id}")
@@ -70,13 +77,20 @@ public class ProductApiController {
 
     @PostMapping(value = "/products/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Producto> uploadImage(@PathVariable int id, @RequestPart("imagen") MultipartFile imagen) {
-        Optional<Producto> existing = productoService.obtenerProductoPorId(id);
-        if (!existing.isPresent()) return ResponseEntity.notFound().build();
-        Producto producto = existing.get();
         try {
+            Optional<Producto> existing = productoService.obtenerProductoPorId(id);
+            if (!existing.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            Producto producto = existing.get();
+            producto.setId(id);
             Producto saved = productoService.guardarProductoConImagen(producto, imagen);
             return ResponseEntity.ok(saved);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

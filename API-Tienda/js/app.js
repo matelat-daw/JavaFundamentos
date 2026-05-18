@@ -218,7 +218,9 @@ async function renderFormulario(id = null) {
             if (fileInput && fileInput.size > 0) {
                 const imgFormData = new FormData();
                 imgFormData.append('imagen', fileInput);
-                await fetch(`${API_BASE_URL}/products/${savedProduct.id}/image`, {
+                // Usar 'id' en edición, 'savedProduct.id' en creación
+                const productId = isEdit ? id : savedProduct.id;
+                await fetch(`${API_BASE_URL}/products/${productId}/image`, {
                     method: 'POST',
                     body: imgFormData
                 });
