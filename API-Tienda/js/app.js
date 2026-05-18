@@ -15,6 +15,7 @@ const app = document.getElementById('app');
 const modalContainer = document.getElementById('modal-container');
 
 let categoriasCache = null;
+const MAX_IMAGE_BYTES = 25 * 1024 * 1024;
 
 async function fetchCategorias() {
     if (Array.isArray(categoriasCache)) return categoriasCache;
@@ -216,6 +217,10 @@ async function renderFormulario(id = null) {
             const fileInput = formData.get('imagen');
             
             if (fileInput && fileInput.size > 0) {
+                if (fileInput.size > MAX_IMAGE_BYTES) {
+                    alert('La imagen es demasiado grande (máx 25MB).');
+                    return;
+                }
                 const imgFormData = new FormData();
                 imgFormData.append('imagen', fileInput);
                 // Usar 'id' en edición, 'savedProduct.id' en creación

@@ -2,15 +2,17 @@ package com.miapp.util;
 
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 public class ImagesUtil {
     private static final String IMAGES_PATH = "/api/imgs/";
     private static final String[] ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "gif", "webp"};
-    private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_FILE_SIZE = resolveMaxFileSizeBytes();
 
     public static Path getUploadDirPath() {
         String configured = Optional.ofNullable(System.getProperty("tienda.images.dir"))
@@ -44,7 +46,7 @@ public class ImagesUtil {
 
     public static String guardarImagen(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) throw new IllegalArgumentException("El archivo de imagen no puede estar vacío");
-        if (file.getSize() > MAX_FILE_SIZE) throw new IllegalArgumentException("El archivo excede el tamaño máximo permitido (5MB)");
+        if (file.getSize() > MAX_FILE_SIZE) throw new IllegalArgumentException("El archivo excede el tamaño máximo permitido");
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isEmpty()) throw new IllegalArgumentException("El nombre del archivo es inválido");
 
@@ -68,7 +70,9 @@ public class ImagesUtil {
             contador++;
         }
 
-        Files.write(filepath, file.getBytes());
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, filepath, StandardCopyOption.REPLACE_EXISTING);
+        }
         return nombreArchivo;
     }
 
@@ -76,6 +80,22 @@ public class ImagesUtil {
         int lastDot = nombreArchivo.lastIndexOf('.');
         if (lastDot > 0) return nombreArchivo.substring(lastDot + 1);
         return "";
+    }
+
+    private static long resolveMaxFileSizeBytes() {
+        String configured = Optional.ofNullable(System.getProperty("tienda.images.maxMb"))
+                .filter(s -> !s.isBlank())
+                .orElseGet(() -> Optional.ofNullable(System.getenv("TIENDA_IMAGES_MAX_MB"))
+                        .filter(s -> !s.isBlank())
+                        .orElse("20"));
+
+        try {
+            int mb = Integer.parseInt(configured.trim());
+            if (mb <= 0) return 20L * 1024 * 1024;
+            return (long) mb * 1024 * 1024;
+        } catch (NumberFormatException e) {
+            return 20L * 1024 * 1024;
+        }
     }
 
     public static boolean eliminarImagen(String nombreImagen) {

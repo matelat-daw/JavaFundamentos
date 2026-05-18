@@ -50,7 +50,6 @@ public class ProductoService {
     public Producto guardarProductoConImagen(Producto producto, MultipartFile imagenFile) throws Exception {
         String imagenAnterior = null;
         
-        // Obtener la imagen anterior si existe
         if (producto.getId() != null && producto.getId() > 0) {
             Optional<Producto> productoExistente = productoRepository.findById(producto.getId());
             if (productoExistente.isPresent()) {
@@ -58,15 +57,13 @@ public class ProductoService {
             }
         }
 
-        // Guardar nueva imagen si se proporciona
         if (imagenFile != null && !imagenFile.isEmpty()) {
+            String nombreImagen = ImagesUtil.guardarImagen(imagenFile);
             if (imagenAnterior != null && !imagenAnterior.isEmpty()) {
                 ImagesUtil.eliminarImagen(imagenAnterior);
             }
-            String nombreImagen = ImagesUtil.guardarImagen(imagenFile);
             producto.setImagen(nombreImagen);
         } else if (imagenAnterior != null && !imagenAnterior.isEmpty()) {
-            // Mantener imagen anterior si no se proporciona nueva
             producto.setImagen(imagenAnterior);
         }
 
