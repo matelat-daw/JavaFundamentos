@@ -27,7 +27,7 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <p class="card-text"><strong>Nombre:</strong> <span class="text-primary" th:text="${nombreProducto}"></span></p>
-                                    <p class="card-text"><strong>Precio:</strong> <span class="text-success" th:text="${precioProducto != null} ? '$' + ${#numbers.formatDecimal(precioProducto, 1, 2)} : 'N/A'"></span></p>
+                                    <p class="card-text"><strong>Precio:</strong> <span class="text-success" th:text="${precioProducto != null} ? ' €' + ${#numbers.formatDecimal(precioProducto, 1, 2)} : 'N/A'"></span></p>
                                 </div>
                             </div>
                             <p class="text-muted text-center">El producto ha sido agregado al catálogo y aparecerá en la tabla de productos.</p>
