@@ -98,7 +98,7 @@
             </div>
 
             <!-- Vista de Tarjetas para Móviles -->
-            <div class="mobile-cards">
+            <div class="mobile-cards d-block d-md-none">
                 <div th:each="producto : ${productos}" class="card mb-3 shadow-sm border-0">
                     <div class="row g-0">
                         <div class="col-4">
@@ -127,7 +127,7 @@
             </div>
 
             <!-- Vista de Tabla para Desktop -->
-            <div class="table-responsive desktop-table">
+            <div class="table-responsive desktop-table d-none d-md-block">
                 <table class="table table-hover table-striped align-middle border shadow-sm">
                     <thead class="table-success">
                         <tr>

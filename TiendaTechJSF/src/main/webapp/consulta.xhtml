@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="jakarta.faces.html"
+xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Consulta de Producto</title>
+    <link rel="stylesheet" href="css/style.css" />
+</h:head>
+<h:body>
+    <div class="form-container">
+        <h1>Consulta de Producto</h1>
+        <p>Introduce tus datos y los del producto que te interesa.</p>
+
+        <h:messages globalOnly="true" styleClass="error-messages" />
+
+        <h:form>
+
+            <div class="campo">
+                <h:outputLabel for="nombreCliente" value="Nombre del Cliente:" />
+                <h:inputText id="nombreCliente"
+                value="#{consultaBean.nombreCliente}"
+                required="true"
+                requiredMessage="El nombre es obligatorio."
+                styleClass="form-control" />
+                <h:message for="nombreCliente" styleClass="error" />
+            </div>
+
+            <div class="campo">
+                <h:outputLabel for="email" value="Correo Electrónico:" />
+                <h:inputText id="email"
+                value="#{consultaBean.email}"
+                required="true"
+                requiredMessage="El email es obligatorio."
+                styleClass="form-control">
+                    <f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
+                </h:inputText>
+                <h:message for="email" styleClass="error" />
+            </div>
+
+            <!-- <div class="campo">
+                <h:outputLabel for="producto" value="Producto de Interés:" />
+                <h:inputText id="producto"
+                value="#{consultaBean.producto}"
+                required="true"
+                requiredMessage="El nombre del producto es obligatorio."
+                styleClass="form-control" />
+                <h:message for="producto" styleClass="error" />
+            </div> -->
+
+            <div class="campo">
+                <h:outputLabel for="producto" value="producto:" />
+
+                <h:selectOneMenu id="producto" value="#{consultaBean.producto}" required="true" requiredMessage="El Producto es obligatorio.">
+                    <f:selectItem itemValue="" itemLabel="-- Selecciona un Producto --" />
+                    <f:selectItem itemValue="CPU-icu9" itemLabel="Microprocesador Intel Core Ultra 9" />
+                    <f:selectItem itemValue="Monitor-27" itemLabel="Monitor 27''" />
+                    <f:selectItem itemValue="Cascos-bt" itemLabel="Cascos Bluetooth" />
+                    <f:selectItem itemValue="MVNE2-1TB" itemLabel="MVNE2 1TB" />
+                </h:selectOneMenu>
+                    <h:message for="producto" styleClass="error" />
+
+            </div>
+
+            <div class="campo">
+                <h:outputLabel for="cantidad" value="Cantidad:" />
+                <h:inputText id="cantidad"
+                value="#{consultaBean.cantidad}"
+                required="true"
+                requiredMessage="La cantidad es obligatoria."
+                styleClass="form-control">
+                    <f:validateLongRange minimum="1" />
+                </h:inputText>
+                <h:message for="cantidad" styleClass="error" />
+            </div>
+
+            <div class="campo">
+                <h:outputLabel for="urgente" value="¿Es urgente?" />
+                <div class="checkbox-wrapper">
+                    <h:selectBooleanCheckbox id="urgente" value="#{consultaBean.urgente}" />
+                    <label for="urgente" style="margin-bottom: 0; margin-left: 5px;">Marcar si la consulta es urgente</label>
+                </div>
+                <h:message for="urgente" styleClass="error" />
+            </div>
+
+            <h:commandButton value="Enviar Consulta" action="#{consultaBean.enviar}" styleClass="btn-guardar" />
+
+            <div style="text-align: center; margin-top: 20px;">
+                <h:link outcome="listado-productos" value="← Volver al listado" style="color: #667eea; text-decoration: none; font-weight: 500; font-size: 1em;" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

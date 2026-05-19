@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Esta clase es el Controlador de la APP, contiene la lógica que usa el modelo Producto, para crear los objetos producto. */
+
 @Named("tiendaBean")
 @SessionScoped
 public class TiendaBean implements Serializable {
