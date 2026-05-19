@@ -35,6 +35,11 @@ xmlns:f="jakarta.faces.core">
 
     <h1>Listado de productos</h1>
 
+    <div style="margin-bottom: 18px; display: flex; gap: 16px; flex-wrap: wrap;">
+        <h:link outcome="alta-producto" value="Registrar producto" style="color: #667eea; text-decoration: none; font-weight: 600;" />
+        <h:link outcome="consulta" value="Ir a consulta" style="color: #667eea; text-decoration: none; font-weight: 600;" />
+    </div>
+
     <p>Total de productos: #{tiendaBean.productos.size()}</p>
 
     <h:dataTable value="#{tiendaBean.productos}" var="p">
@@ -62,6 +67,11 @@ xmlns:f="jakarta.faces.core">
             <h:outputText value="#{p.disponible ? 'Sí' : 'No'}" />
         </h:column>
 
+        <h:column>
+            <f:facet name="header">Stock</f:facet>
+            <h:outputText value="#{p.stock}" />
+        </h:column>
+
     </h:dataTable>
 
     <br />
@@ -69,6 +79,10 @@ xmlns:f="jakarta.faces.core">
         <h:commandButton value="Añadir otro producto"
         action="#{tiendaBean.volverAlFormulario}" />
     </h:form>
+
+    <div style="margin-top: 16px;">
+        <h:link outcome="consulta" value="Ir a consulta de producto" style="color: #667eea; text-decoration: none; font-weight: 600;" />
+    </div>
 
 </h:body>
 

@@ -19,7 +19,8 @@ public class TiendaBean implements Serializable {
             productoForm.getNombre(),
             productoForm.getPrecio(),
             productoForm.getCategoria(),
-            productoForm.isDisponible()
+            productoForm.isDisponible(),
+            productoForm.getStock()
         );
         productos.add(nuevo);
         productoForm = new Producto();  // Limpiar formulario

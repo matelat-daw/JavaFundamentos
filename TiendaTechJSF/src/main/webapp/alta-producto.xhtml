@@ -64,6 +64,18 @@ Periféricos, Pantallas, Audio, Componentes.
         </div>
 
         <div class="campo">
+            <h:outputLabel for="stock" value="Stock disponible:" />
+            <h:inputText id="stock"
+                         value="#{tiendaBean.productoForm.stock}"
+                         required="true"
+                         requiredMessage="El stock es obligatorio."
+                         styleClass="form-control">
+                <f:validateLongRange minimum="0" />
+            </h:inputText>
+            <h:message for="stock" styleClass="error" />
+        </div>
+
+        <div class="campo">
             <h:outputLabel for="disponible" value="Disponible:" />
 
             <!-- TODO 10:

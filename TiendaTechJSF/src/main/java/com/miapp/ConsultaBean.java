@@ -1,18 +1,26 @@
 package com.miapp;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named("consultaBean")
-@RequestScoped
+@SessionScoped
 
 public class ConsultaBean implements Serializable {
     
+    @Inject
+    private TiendaBean tiendaBean;
+
     private String nombreCliente;
     private String email;
     private String producto;
-    private int cantidad;
+    private Integer cantidad;
     private boolean urgente;
 
     public ConsultaBean() {
@@ -43,11 +51,26 @@ public class ConsultaBean implements Serializable {
         this.producto = producto;
     }
 
-    public int getCantidad() {
+    public Producto getProductoSeleccionado() {
+        if (tiendaBean == null || producto == null || producto.isBlank()) {
+            return null;
+        }
+
+        List<Producto> productos = tiendaBean.getProductos();
+        for (Producto item : productos) {
+            if (producto.equals(item.getNombre())) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -59,7 +82,61 @@ public class ConsultaBean implements Serializable {
         this.urgente = urgente;
     }
 
+    public int getStockDisponible() {
+        Producto seleccionado = getProductoSeleccionado();
+        if (seleccionado == null) {
+            return 0;
+        }
+
+        return seleccionado.getStock();
+    }
+
+    public boolean isHayStockDisponible() {
+        Producto seleccionado = getProductoSeleccionado();
+        return seleccionado != null && seleccionado.isDisponible() && seleccionado.getStock() > 0;
+    }
+
+    public boolean isMostrarCantidadSelector() {
+        Producto seleccionado = getProductoSeleccionado();
+        return seleccionado != null && seleccionado.isDisponible() && seleccionado.getStock() > 0;
+    }
+
+    public boolean isMostrarMensajeNoDisponible() {
+        Producto seleccionado = getProductoSeleccionado();
+        return seleccionado != null && (!seleccionado.isDisponible() || seleccionado.getStock() <= 0);
+    }
+
+    public boolean isProductoSinDisponibilidad() {
+        Producto seleccionado = getProductoSeleccionado();
+        return seleccionado == null || !seleccionado.isDisponible() || seleccionado.getStock() <= 0;
+    }
+
+    public List<Integer> getCantidadesDisponibles() {
+        int limite = Math.min(5, getStockDisponible());
+        List<Integer> cantidades = new ArrayList<>();
+        for (int i = 1; i <= limite; i++) {
+            cantidades.add(i);
+        }
+        return cantidades;
+    }
+
     public String enviar() {
+        if (isProductoSinDisponibilidad()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Este producto no está disponible o no tiene stock. Consulta por otro producto.",
+                            null));
+            return null;
+        }
+
+        if (cantidad != null && cantidad > getStockDisponible()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "La cantidad solicitada supera el stock disponible.",
+                            null));
+            return null;
+        }
+
         System.out.println("Consulta recibida de: " + nombreCliente);
         System.out.println("Email: " + email);
         System.out.println("Producto: " + producto);

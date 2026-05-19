@@ -18,6 +18,7 @@ import jakarta.inject.Named;
     private double precio;
     private String categoria;
     private boolean disponible;
+     private int stock;
 
  // TODO 2: crea el constructor vacío
  // Pista: public Producto() { }
@@ -25,11 +26,12 @@ import jakarta.inject.Named;
     }
 
  // TODO 3: crea el constructor con todos los campos
-    public Producto(String nombre, double precio, String categoria, boolean disponible) {
+    public Producto(String nombre, double precio, String categoria, boolean disponible, int stock) {
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
         this.disponible = disponible;
+        this.stock = stock;
     }
 
  // TODO 4: crea getters y setters
@@ -66,5 +68,13 @@ import jakarta.inject.Named;
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }
