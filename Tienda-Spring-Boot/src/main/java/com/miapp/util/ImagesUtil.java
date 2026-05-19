@@ -16,8 +16,8 @@ public class ImagesUtil {
     // Extensiones permitidas
     private static final String[] ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "gif", "webp"};
     
-    // Tamaño máximo de archivo en bytes (5MB)
-    private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
+    // Tamaño máximo de archivo en bytes (20MB)
+    private static final long MAX_FILE_SIZE = 20 * 1024 * 1024;
 
     public static Path getUploadDirPath() {
         String configured = Optional.ofNullable(System.getProperty("tienda.images.dir"))
@@ -97,7 +97,7 @@ public class ImagesUtil {
         
         // Validar tamaño
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("El archivo excede el tamaño máximo permitido (5MB)");
+            throw new IllegalArgumentException("El archivo excede el tamaño máximo permitido (20MB)");
         }
         
         // Obtener nombre original y extensión

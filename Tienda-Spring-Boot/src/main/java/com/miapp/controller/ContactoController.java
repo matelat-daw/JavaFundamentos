@@ -8,19 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/tienda")
+@RequestMapping("/store")
 public class ContactoController {
     
     @Autowired
     private ContactoService contactoService;
     
-    @GetMapping("/contacto")
+    @GetMapping("/contact")
     public String mostrarFormularioContacto(Model model) {
         model.addAttribute("contacto", new Contacto());
         return "contacto";
     }
     
-    @PostMapping("/contacto/enviar")
+    @PostMapping("/contact/send")
     public String enviarContacto(@ModelAttribute Contacto contacto, Model model) {
         contactoService.guardarContacto(contacto);
         model.addAttribute("mensajeExito", "¡Mensaje enviado con éxito!");

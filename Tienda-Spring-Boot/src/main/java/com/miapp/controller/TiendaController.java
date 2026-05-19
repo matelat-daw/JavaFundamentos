@@ -14,8 +14,8 @@ public class TiendaController {
         return "tienda";
     }
     
-    @GetMapping("/tienda")
-    public String tienda(Model model) {
+    @GetMapping("/store")
+    public String store(Model model) {
         model.addAttribute("nombreTienda", "Tienda Tech");
         model.addAttribute("mensaje", "Aplicación convertida a Spring Boot");
         return "tienda";

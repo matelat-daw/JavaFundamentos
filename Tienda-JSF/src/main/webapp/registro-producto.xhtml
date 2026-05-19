@@ -36,6 +36,7 @@
                                 <h:outputLabel for="precio" value="Precio:" styleClass="form-label" />
                                 <h:inputText id="precio" value="#{productoBean.precio}" required="true"
                                            requiredMessage="El precio es obligatorio"
+                                           validatorMessage="El precio debe ser mayor a 0,00"
                                            styleClass="form-control">
                                     <f:validateDoubleRange minimum="0.01" />
                                 </h:inputText>

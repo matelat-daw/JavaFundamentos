@@ -6,6 +6,8 @@ import com.miapp.repository.ProductoRepository;
 import com.miapp.repository.CategoriaRepository;
 import com.miapp.util.ImagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -23,6 +25,10 @@ public class ProductoService {
     
     public List<Producto> obtenerCatalogo() {
         return productoRepository.findAll();
+    }
+
+    public Page<Producto> obtenerCatalogoPaginado(Pageable pageable) {
+        return productoRepository.findAll(pageable);
     }
     
     public Optional<Producto> obtenerProductoPorId(int id) {
@@ -46,6 +52,10 @@ public class ProductoService {
     
     public List<Producto> buscarPorCategoria(String categoria) {
         return productoRepository.findByCategoria(categoria);
+    }
+
+    public Page<Producto> buscarPorCategoriaPaginado(String categoria, Pageable pageable) {
+        return productoRepository.findByCategoria(categoria, pageable);
     }
     
     public List<Producto> buscarPorNombre(String nombre) {

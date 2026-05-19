@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/tienda")
+@RequestMapping("/store")
 public class ResumenController {
     
     @Autowired
     private ProductoService productoService;
     
-    @GetMapping("/resumen")
+    @GetMapping("/summary")
     public String resumen(Model model) {
         var productos = productoService.obtenerCatalogo();
         var totalProductos = productos.size();

@@ -54,7 +54,7 @@
                     <h2 class="text-primary mb-4">Envíanos un Mensaje</h2>
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/tienda/contacto/enviar}" th:object="${contacto}" method="POST">
+                            <form th:action="@{/store/contact/send}" th:object="${contacto}" method="POST">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre:</label>
                                     <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required>

@@ -3,83 +3,124 @@ package com.miapp.controller;
 import com.miapp.model.Producto;
 import com.miapp.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/tienda")
+@RequestMapping("/store")
 public class CatalogoController {
     
     @Autowired
     private ProductoService productoService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new java.beans.PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if (text == null) {
+                    setValue(null);
+                    return;
+                }
+
+                String value = text.trim().replace(" ", "");
+                if (value.isEmpty()) {
+                    setValue(null);
+                    return;
+                }
+
+                if (value.contains(",") && value.contains(".")) {
+                    value = value.replace(".", "").replace(",", ".");
+                } else if (value.contains(",")) {
+                    value = value.replace(",", ".");
+                }
+
+                setValue(new BigDecimal(value));
+            }
+        });
+    }
     
-    @GetMapping("/catalogo")
-    public String catalogo(Model model) {
-        model.addAttribute("productos", productoService.obtenerCatalogo());
+    @GetMapping("/catalog")
+    public String catalogo(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            Model model) {
+        int pageSize = 8;
+        PageRequest pageable = PageRequest.of(Math.max(page, 0), pageSize, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Producto> productosPage = productoService.obtenerCatalogoPaginado(pageable);
+
+        model.addAttribute("productosPage", productosPage);
         model.addAttribute("categorias", productoService.obtenerCategorias());
         return "catalogo";
     }
     
-    @GetMapping("/catalogo/categoria/{categoria}")
-    public String catalogoPorCategoria(@PathVariable String categoria, Model model) {
-        model.addAttribute("productos", productoService.buscarPorCategoria(categoria));
-        model.addAttribute("categoriaSeleccionada", categoria);
+    @GetMapping("/catalog/category/{category}")
+    public String catalogoPorCategoria(
+            @PathVariable("category") String category,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            Model model) {
+        int pageSize = 8;
+        PageRequest pageable = PageRequest.of(Math.max(page, 0), pageSize, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Producto> productosPage = productoService.buscarPorCategoriaPaginado(category, pageable);
+
+        model.addAttribute("productosPage", productosPage);
+        model.addAttribute("categoriaSeleccionada", category);
         model.addAttribute("categorias", productoService.obtenerCategorias());
         return "catalogo";
     }
     
-    @GetMapping("/detalle/{id}")
+    @GetMapping("/detail/{id}")
     public String detalleProducto(@PathVariable int id, Model model) {
         Optional<Producto> producto = productoService.obtenerProductoPorId(id);
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
             return "detalle-producto";
         }
-        return "redirect:/tienda/catalogo";
+        return "redirect:/store/catalog";
     }
     
-    @GetMapping("/nuevo")
+    @GetMapping("/new")
     public String mostrarFormularioNuevo(Model model) {
         model.addAttribute("producto", new Producto());
         model.addAttribute("categorias", productoService.obtenerCategorias());
         return "nuevo-producto";
     }
     
-    @PostMapping("/guardar")
+    @PostMapping("/save")
     public String guardarProducto(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("precio") BigDecimal precio,
-            @RequestParam("categoria") String categoria,
-            @RequestParam("descripcion") String descripcion,
-            @RequestParam(value = "imagen", required = false) MultipartFile imagen,
+            @Valid @ModelAttribute("producto") Producto producto,
+            BindingResult bindingResult,
+            @RequestParam(value = "imagenFile", required = false) MultipartFile imagenFile,
             RedirectAttributes redirectAttributes,
             Model model) {
         try {
-            // Validar que se proporcionó una imagen
-            if (imagen == null || imagen.isEmpty()) {
-                model.addAttribute("error", "Debes seleccionar una imagen para el producto");
-                model.addAttribute("nombre", nombre);
-                model.addAttribute("precio", precio);
-                model.addAttribute("categoria", categoria);
-                model.addAttribute("descripcion", descripcion);
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("error", "Revisa los campos marcados e inténtalo de nuevo.");
                 model.addAttribute("categorias", productoService.obtenerCategorias());
                 return "nuevo-producto";
             }
-            
-            // Construir objeto Producto manualmente
-            Producto producto = new Producto();
-            producto.setNombre(nombre);
-            producto.setPrecio(precio);
-            producto.setCategoria(categoria);
-            producto.setDescripcion(descripcion);
-            
+
+            // Validar que se proporcionó una imagen
+            if (imagenFile == null || imagenFile.isEmpty()) {
+                model.addAttribute("error", "Debes seleccionar una imagen para el producto");
+                model.addAttribute("categorias", productoService.obtenerCategorias());
+                return "nuevo-producto";
+            }
+
             // Guardar con imagen
-            Producto productoGuardado = productoService.guardarProductoConImagen(producto, imagen);
+            Producto productoGuardado = productoService.guardarProductoConImagen(producto, imagenFile);
             
             // Usar flash attributes para pasar el mensaje de éxito y datos del producto para el modal
             redirectAttributes.addFlashAttribute("tipo", "exito");
@@ -87,29 +128,21 @@ public class CatalogoController {
             redirectAttributes.addFlashAttribute("nombreProducto", productoGuardado.getNombre());
             redirectAttributes.addFlashAttribute("precioProducto", productoGuardado.getPrecio());
             
-            return "redirect:/tienda/catalogo";
+            return "redirect:/store/catalog";
         } catch (IllegalArgumentException e) {
             // Error de validación (extensión, tamaño, etc)
             model.addAttribute("error", "Error: " + e.getMessage());
-            model.addAttribute("nombre", nombre);
-            model.addAttribute("precio", precio);
-            model.addAttribute("categoria", categoria);
-            model.addAttribute("descripcion", descripcion);
             model.addAttribute("categorias", productoService.obtenerCategorias());
             return "nuevo-producto";
         } catch (Exception e) {
             // Otros errores
             model.addAttribute("error", "Error inesperado al guardar: " + e.getMessage());
-            model.addAttribute("nombre", nombre);
-            model.addAttribute("precio", precio);
-            model.addAttribute("categoria", categoria);
-            model.addAttribute("descripcion", descripcion);
             model.addAttribute("categorias", productoService.obtenerCategorias());
             return "nuevo-producto";
         }
     }
     
-    @GetMapping("/editar/{id}")
+    @GetMapping("/edit/{id}")
     public String mostrarFormularioEditar(@PathVariable int id, Model model) {
         Optional<Producto> producto = productoService.obtenerProductoPorId(id);
         if (producto.isPresent()) {
@@ -117,50 +150,38 @@ public class CatalogoController {
             model.addAttribute("categorias", productoService.obtenerCategorias());
             return "editar-producto";
         }
-        return "redirect:/tienda/catalogo";
+        return "redirect:/store/catalog";
     }
     
-    @PostMapping("/actualizar")
+    @PostMapping("/update")
     public String actualizarProducto(
-            @RequestParam("id") int id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("precio") BigDecimal precio,
-            @RequestParam("categoria") String categoria,
-            @RequestParam("descripcion") String descripcion,
-            @RequestParam(value = "imagen", required = false) MultipartFile imagen,
+            @Valid @ModelAttribute("producto") Producto producto,
+            BindingResult bindingResult,
+            @RequestParam(value = "imagenFile", required = false) MultipartFile imagenFile,
             Model model) {
         try {
-            // Construir objeto Producto manualmente
-            Producto producto = new Producto();
-            producto.setId(id);
-            producto.setNombre(nombre);
-            producto.setPrecio(precio);
-            producto.setCategoria(categoria);
-            producto.setDescripcion(descripcion);
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("error", "Revisa los campos marcados e inténtalo de nuevo.");
+                model.addAttribute("categorias", productoService.obtenerCategorias());
+                return "editar-producto";
+            }
             
             // Guardar con imagen (imagen puede ser null/vacío)
-            productoService.guardarProductoConImagen(producto, imagen);
+            productoService.guardarProductoConImagen(producto, imagenFile);
             
-            return "redirect:/tienda/detalle/" + id;
+            return "redirect:/store/detail/" + producto.getId();
         } catch (IllegalArgumentException e) {
             // Error de validación (extensión, tamaño, etc)
             model.addAttribute("error", "Error: " + e.getMessage());
-            Producto productoTemp = new Producto();
-            productoTemp.setId(id);
-            productoTemp.setNombre(nombre);
-            productoTemp.setPrecio(precio);
-            productoTemp.setCategoria(categoria);
-            productoTemp.setDescripcion(descripcion);
-            model.addAttribute("producto", productoTemp);
             model.addAttribute("categorias", productoService.obtenerCategorias());
             return "editar-producto";
         } catch (Exception e) {
             // Otros errores
-            return "redirect:/tienda/editar/" + id;
+            return "redirect:/store/edit/" + producto.getId();
         }
     }
     
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/delete/{id}")
     public String eliminarProducto(@PathVariable int id, RedirectAttributes redirectAttributes) {
         try {
             Optional<Producto> producto = productoService.obtenerProductoPorId(id);
@@ -173,14 +194,14 @@ public class CatalogoController {
                 redirectAttributes.addFlashAttribute("mensaje", "El producto ha sido eliminado permanentemente.");
                 redirectAttributes.addFlashAttribute("nombreProducto", nombreProducto);
                 
-                return "redirect:/tienda/catalogo";
+                return "redirect:/store/catalog";
             } else {
                 redirectAttributes.addFlashAttribute("error", "Producto no encontrado");
-                return "redirect:/tienda/catalogo";
+                return "redirect:/store/catalog";
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar producto: " + e.getMessage());
-            return "redirect:/tienda/catalogo";
+            return "redirect:/store/catalog";
         }
     }
 }

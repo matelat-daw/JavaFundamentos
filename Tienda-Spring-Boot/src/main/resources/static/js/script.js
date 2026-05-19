@@ -6,7 +6,8 @@ function confirmarEliminacion(id, nombre) {
     if (modalEl && nombreEl && btnEliminar) {
         // Actualizar datos del modal
         nombreEl.textContent = nombre;
-        btnEliminar.href = '/tienda/eliminar/' + id;
+        const base = (window.APP_BASE || '/').replace(/\/?$/, '/');
+        btnEliminar.href = base + 'store/delete/' + id;
 
         // Mostrar el modal usando Bootstrap 5
         const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
