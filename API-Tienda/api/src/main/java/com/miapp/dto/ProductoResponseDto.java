@@ -1,25 +1,20 @@
-package com.miapp.model;
+package com.miapp.dto;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "producto")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductoResponseDto {
     private Integer id;
     private String nombre;
     private int stock;
     private BigDecimal precio;
-    @Column(name = "categoria")
-    private Long categoria;
+    private String categoria;
     private String descripcion;
     private String imagen;
 }

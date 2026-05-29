@@ -9,12 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
-    List<Producto> findByCategoria(String categoria);
+    List<Producto> findByCategoria(Long categoria);
     List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
     @Query("SELECT DISTINCT p.categoria FROM Producto p")
-    List<String> findAllCategorias();
-
-    @Query(value = "SELECT nombre FROM categoria ORDER BY nombre", nativeQuery = true)
-    List<String> findAllCategoriaNombres();
+    List<Long> findAllCategorias();
 }

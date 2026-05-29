@@ -13,6 +13,7 @@ export async function productoFormHtml({ producto, isEdit, id, opcionesCategoria
         imagenActual: escapeHtml(p.imagen || ''),
         nombre: escapeHtml(p.nombre),
         precio: escapeHtml(p.precio),
+        stock: escapeHtml(p.stock ?? 0),
         opcionesCategorias: opcionesCategoriasHtml,
         descripcion: escapeHtml(p.descripcion),
         previewImagen,

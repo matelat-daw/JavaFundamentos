@@ -141,7 +141,7 @@ async function renderDetalle(id) {
 }
 
 async function renderFormulario(id = null) {
-    let p = { nombre: '', precio: 0, categoria: '', descripcion: '', imagen: '' };
+    let p = { nombre: '', precio: 0, stock: 0, categoria: '', descripcion: '', imagen: '' };
     const isEdit = id !== null;
     
     if (isEdit) {
@@ -161,11 +161,16 @@ async function renderFormulario(id = null) {
         categorias = [];
     }
 
+    const categoriaSeleccionada = categorias.find((c) =>
+        String(c?.nombre || '').toLowerCase() === String(p.categoria || '').toLowerCase()
+    );
+    const categoriaSeleccionadaId = categoriaSeleccionada?.id ?? '';
+
     const opcionesCategorias = [
-        `<option value="" disabled ${!p.categoria ? 'selected' : ''}>Selecciona una categoría</option>`,
+        `<option value="" disabled ${!categoriaSeleccionadaId ? 'selected' : ''}>Selecciona una categoría</option>`,
         ...categorias.map((c) => {
-            const selected = p.categoria === c ? 'selected' : '';
-            return `<option value="${escapeHtml(c)}" ${selected}>${escapeHtml(c)}</option>`;
+            const selected = String(categoriaSeleccionadaId) === String(c.id) ? 'selected' : '';
+            return `<option value="${escapeHtml(String(c.id))}" ${selected}>${escapeHtml(c.nombre)}</option>`;
         })
     ].join('');
 
@@ -181,10 +186,17 @@ async function renderFormulario(id = null) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const imagenActual = (formData.get('imagenActual') || '').toString();
+        const categoriaRaw = (formData.get('categoria') || '').toString().trim();
+        const categoriaId = categoriaRaw ? Number(categoriaRaw) : null;
+        if (categoriaRaw && !Number.isFinite(categoriaId)) {
+            alert('Categoría inválida. Selecciona una categoría válida.');
+            return;
+        }
         const productData = {
             nombre: formData.get('nombre'),
             precio: parseFloat(formData.get('precio')),
-            categoria: formData.get('categoria'),
+            stock: parseInt(formData.get('stock'), 10),
+            categoria: Number.isFinite(categoriaId) ? categoriaId : null,
             descripcion: formData.get('descripcion')
         };
 
@@ -212,6 +224,11 @@ async function renderFormulario(id = null) {
                     body: JSON.stringify(productData)
                 });
             }
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Error ${response.status}: ${errorText || 'sin detalle'}`);
+            }
             
             const savedProduct = await response.json();
             const fileInput = formData.get('imagen');
@@ -234,7 +251,8 @@ async function renderFormulario(id = null) {
             showSuccessModal(isEdit ? 'Actualizado' : 'Creado', savedProduct.nombre);
             navigate('catalogo');
         } catch (error) {
-            alert('Error al guardar el producto');
+            console.error(error);
+            alert('Error al guardar el producto. Revisa la consola para más detalle.');
         }
     };
 }
