@@ -1,11 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.miapp</groupId>
-  <artifactId>ROOT</artifactId>
-  <version>1.0.0</version>
-  <packaging>war</packaging>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -14,22 +10,20 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
+  <groupId>com.miapp</groupId>
+  <artifactId>ROOT</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging> <!-- Cambiado a JAR para APIs modernas -->
+
   <properties>
     <java.version>25</java.version>
   </properties>
 
   <dependencies>
-    <!-- Servidor Web (Tomcat embebido se descarta en el empaquetado final gracias al scope provided de abajo) -->
+    <!-- Servidor Web Embebido para API REST (Tomcat corre dentro del JAR) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    
-    <!-- Servidor proveído por el entorno de despliegue externo (ej. Tomcat, WildFly) -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
     </dependency>
     
     <!-- Persistencia de Datos -->
@@ -64,7 +58,7 @@
   <build>
     <finalName>ROOT</finalName>
     <plugins>
-      <!-- Plugin oficial de Spring Boot -->
+      <!-- Plugin de Spring Boot para generar el JAR ejecutable -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -78,22 +72,16 @@
         </configuration>
       </plugin>
       
-      <!-- Plugin de compilación simplificado y adaptado a las propiedades de Spring Boot -->
+      <!-- Plugin de compilación limpio compatible con Java 25 y Lombok -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <fork>true</fork>
-          <compilerArgs>
-            <arg>-Xlint:-removal</arg>
-            <arg>--add-opens</arg>
-            <arg>java.base/java.lang=ALL-UNNAMED</arg>
-          </compilerArgs>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version> <!-- Usa la versión gestionada por Spring Boot -->
+              <version>${lombok.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>

@@ -10,3 +10,40 @@ Se peuden Usar Juntos: mvn clean package
 
 
 npx repomix --style plain
+
+
+MariaDB SQL:
+
+-- Crea el usuario sin contraseña y permite conexiones desde cualquier IP (%)
+CREATE USER 'rooot'@'%' IDENTIFIED VIA mysql_native_password USING '';
+
+-- Otorga todos los privilegios sobre cualquier base de datos y tabla (*.*)
+GRANT ALL PRIVILEGES ON *.* TO 'rooot'@'%' WITH GRANT OPTION;
+
+-- Recarga los privilegios en la memoria del servidor
+FLUSH PRIVILEGES;
+
+
+Copia por SSH:
+
+
+scp -r /home/orion/Server/html/Java/JavaFundamentos/API-Tienda/api pitag@192.168.1.39:"C:/TMP" // Este Funciona.
+
+
+rsync -avzP /home/orion/Server/html/Java/JavaFundamentos/API-Tienda/api pitag@192.168.1.39:"C:/TMP" // OJO este no Funcionó.
+
+
+Docker:
+
+cd /home/orion/BackUp/API-Tienda/api
+
+docker login
+
+docker build -t orions68/tienda-api:latest .
+docker push orions68/tienda-api:latest
+
+
+cd /home/orion/BackUp/API-Tienda/api
+
+docker compose pull
+docker compose up -d
